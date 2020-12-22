@@ -1,0 +1,180 @@
+﻿@model IEnumerable<ThuongMaiDienTu.Models.OrderDetail>
+
+@{
+    ViewBag.Title = "3RINGS | Chi tiết đơn hàng";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+    double VAT = 0;
+    double shippingCost = 0;
+    double discount = 0;
+    double tongtien = 0;
+}
+<style>
+    .jumbotron p {
+        text-align: left;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .btn {
+        margin-left: 10px;
+    }
+</style>
+<div class="container">
+    @if (Session["UserID"] != null)
+    {
+        <ol class="breadcrumb" style="margin: 20px 0 0 0">
+            <li><a href="/Home/Index">Trang chủ</a></li>
+            <li><a href="@Url.Action("tai-khoan-cua-toi", "User")">Đơn hàng của tôi</a></li>
+            <li>Chi tiết đơn hàng</li>
+        </ol>
+    }
+    <div class="product-header" style="margin-bottom: 20px">
+        THÔNG TIN ĐƠN HÀNG
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="jumbotron">
+                @foreach (var item in Model.Take(1))
+                {
+                    <p>Mã đơn hàng: @item.OrderID</p>
+                    <p>Trạng thái: @item.Order.OrderStatu.StatusName</p>
+                    if (item.Order.CheckOut == true)
+                    {
+                        <p>Đã thanh toán: Đã thanh toán</p>
+                    }
+                    else
+                    {
+                        <p>Đã thanh toán: Chưa thanh toán</p>
+                    }
+                    if (item.Order.Payment == true)
+                    {
+                        <p>Hình thức: Paypal</p>
+                    }
+                    else
+                    {
+                        <p>Hình thức: Ship COD</p>
+                    }
+                    <p>Ngày đặt: @item.Order.OrderDate</p>
+                    <p>Ngày nhận: @item.Order.RecieveDate</p>
+                    <p>Khách hàng: @item.Order.FullName</p>
+                    <p>SĐT: @item.Order.PhoneNumber</p>
+                    <p>Email: @item.Order.Email</p>
+                    <p>Địa chỉ giao hàng: @item.Order.ShippingAddress</p>
+                    <p>Ghi chú: @item.Order.Note</p>
+
+                    VAT = (double)item.Order.VAT;
+                    shippingCost = (double)item.Order.ShippingCost;
+                    discount = (double)item.Order.Discount;
+                    tongtien = (double)item.Order.TotalPrice;
+
+
+                }
+            </div>
+        </div>
+        <div class="col-md-8">
+
+            <div class="jumbotron">
+                <table class="table">
+                    <thead>
+                        <tr class="bg-primary">
+                            <th class="text-center">
+                                Mã SP
+                            </th>
+                            <th colspan="2" class="text-center">
+                                Sản phẩm
+                            </th>
+                            <th class="text-center">
+                                Đơn giá
+                            </th>
+                            <th class="text-center">
+                                Số lượng
+                            </th>
+                            <th class="text-center">
+                                Thành tiền
+                            </th>
+                        </tr>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    @item.ProductID
+                                </td>
+                                <td class="text-center">
+                                    <img src="@Url.Content(item.Product.Image)" style="height:50px; width: auto;" />
+                                </td>
+                                <td>
+                                    @item.Product.ProductName
+                                </td>
+
+                                <td class="text-center">
+                                    @item.Product.Price.Value.ToString("N0")
+                                </td>
+                                <td class="text-center">
+                                    x @item.Quantity
+                                </td>
+                                <td class="text-center">
+                                    @item.TotalPrice.Value.ToString("N0")
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>@Model.Sum(s => s.Quantity) sản phẩm</td>
+                            <td class="text-center">@Model.Sum(s => s.TotalPrice).Value.ToString("N0") <sup>đ</sup></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>VAT</td>
+                            <td class="text-center">@VAT.ToString("N0") <sup>đ</sup></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>Phí vận chuyển</td>
+                            <td class="text-center">@shippingCost.ToString("N0") <sup>đ</sup></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>Giảm giá</td>
+                            <td class="text-center">@discount.ToString("N0") <sup>đ</sup></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td style="color: red; font-weight: bold; font-size: 20px;">Thành tiền</td>
+                            <td class="text-center" style="color: red; font-weight: bold; font-size: 20px;">@tongtien.ToString("N0") <sup>đ</sup></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            @foreach (var item in Model.Take(1))
+            {
+                <div class="text-right">
+                    @if (Session["UserID"] != null)
+                    {
+                        @Html.ActionLink("Trở về", "tai-khoan-cua-toi", "User", new { @class = "btn btn-success" })
+                        if (item.Order.StatusID == 1 || item.Order.StatusID == 2 || item.Order.StatusID == 3)
+                        {
+                            @Html.ActionLink("Hủy đơn hàng", "CancelOrder", "User", new { id = item.OrderID }, new { @class = "btn btn-danger" })
+
+                        }
+
+                        if (item.Order.OrderStatu.StatusID == 5)
+                        {
+                            @Html.ActionLink("Hoàn tác", "Reconfirm", "Order", new { id = item.OrderID }, new { @class = "btn btn-primary" })
+                        }
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("theo-doi-don-hang", "ShoppingCart")" class="btn btn-success">Trở về</a>
+                    }
+
+
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

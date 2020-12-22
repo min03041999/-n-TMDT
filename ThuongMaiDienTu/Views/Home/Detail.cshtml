@@ -1,0 +1,232 @@
+﻿@model ThuongMaiDienTu.Models.Product
+
+@{
+    string tenSP = Model.FullName;
+    string hangSP = Model.Brand.BrandName;
+    ViewBag.Title = "3RINGS | Điện thoại " + hangSP + " | " + tenSP;
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+    double a = Convert.ToDouble(Model.Price);
+    double b = a * 1.1 + 490000;
+}
+<head>
+    <script>
+        function currentDiv(n) {
+            showDivs(slideIndex = n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("slide");
+            var dots = document.getElementsByClassName("demo");
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace("", "");
+            }
+            x[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += "";
+        }
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <ol class="breadcrumb" style="margin-top: 20px">
+            <li><a href="/Home/Index">Trang chủ</a></li>
+            <li><a href="@Url.Action("dien-thoai", "Home")">Điện thoại</a></li>
+            <li>@Model.Brand.BrandName</li>
+        </ol>
+        <h3>@Html.DisplayFor(model => model.FullName) @Html.Action("CountRating", "Home")</h3>
+
+
+        <hr />
+        <div class="row">
+            <div class="col-md-4" style="margin-bottom: 20px">
+                <div class="thumbnail" style="max-width:1200px">
+                    <img alt="@Url.Content(Model.FullName)" class="slide" src="@Url.Content(Model.Image)" style="height: 350px; width: auto;">
+                    <img alt="@Url.Content(Model.FullName)" class="slide" src="@Url.Content(Model.Image2)" style="height: 350px; width: auto; display: none">
+                    <img alt="@Url.Content(Model.FullName)" class="slide" src="@Url.Content(Model.Image3)" style="height: 350px; width: auto; display: none">
+                    <img alt="@Url.Content(Model.FullName)" class="slide" src="@Url.Content(Model.Image4)" style="height: 350px; width: auto; display: none">
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-xs-3">
+                        <img alt="@Url.Content(Model.FullName)" class="thumbnail demo" style="height: auto; width: 70px; display: block; margin: auto; padding: 10px" src="@Url.Content(Model.Image)" onclick="currentDiv(1)">
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <img alt="@Url.Content(Model.FullName)" class="thumbnail demo" style="height: auto; width: 70px; display: block; margin: auto; padding: 10px" src="@Url.Content(Model.Image2)" onclick="currentDiv(2)">
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <img alt="@Url.Content(Model.FullName)" class="thumbnail  demo" style="height: auto; width: 70px; display: block; margin: auto; padding: 10px" src="@Url.Content(Model.Image3)" onclick="currentDiv(3)">
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <img alt="@Url.Content(Model.FullName)" class="thumbnail demo" style="height: auto; width: 70px; display: block; margin: auto; padding: 10px" src="@Url.Content(Model.Image4)" onclick="currentDiv(4)">
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-4" style="margin-bottom: 20px">
+                <div class="row">
+                    <div class="col-md-5 col-xs-5">
+                        <p class="gia-sp">@Model.Price.Value.ToString("N0") <sup> đ</sup></p>
+                    </div>
+                    <div class="col-md-7 col-xs-7">
+                        <p class="gia-goc">Giá gốc: <span style="text-decoration: line-through">@b <sup> đ</sup></span></p>
+                    </div>
+                </div>
+                <div>
+                    <p style="background-color: #f5f5f5; text-align: center; padding: 10px;">Giảm <b style="color:red">10%</b> khi mua <b style="color:red">trực tiếp</b> tại của hàng</p>
+                </div>
+                <p class="khuyen-mai">Khuyến mãi</p>
+                <div class="thumbnail">
+                    <ul>
+                        <li>Giảm 10% đối với khách hàng lần đầu mua hàng tại 3rings (Áp dụng đối với khách hàng đã đăng kí 3rings Member).</li>
+                        <li>Giảm 200.000đ khi mua kèm Tai nghe Airpods.</li>
+                        <li>Thu cũ đổi mới - trợ giá tốt nhất.</li>
+                        <li>Tích 2% giá trị đơn hàng cho thành viên 3rings member.</li>
+                    </ul>
+                </div>
+                @if (Model.Quantity <= 0)
+                {
+                    <p class="text-center">Sản phẩm đã bán hết</p>
+                    <button disabled class="btn btn-primary" style="width: 100%;">Thêm vào giỏ hàng <i class="fas fa-cart-plus"></i></button>
+                }
+                else
+                {
+                    <a onclick="addtocart()" href="/ShoppingCart/AddToCart/@Model.ProductID" class="btn btn-primary" style="width: 100%;">Thêm vào giỏ hàng <i class="fas fa-cart-plus"></i></a>
+                }
+            </div>
+            <div class="col-md-4" style="margin-bottom: 20px">
+                <p class="thong-so">
+                    Thông số kĩ thuật
+                </p>
+                <table class="table table-hover table-striped">
+                    <tr>
+                        <td width="30%">Tên đầy đủ</td>
+                        <td>@Html.DisplayFor(model => model.FullName)</td>
+                    </tr>
+                    <tr>
+                        <td>Thương hiệu</td>
+                        <td>@Html.DisplayFor(model => model.Brand.BrandName)</td>
+                    </tr>
+                    <tr>
+                        <td>Màn hình</td>
+                        <td>@Html.DisplayFor(model => model.Screen)</td>
+                    </tr>
+                    <tr>
+                        <td>Bộ nhớ trong</td>
+                        <td>@Html.DisplayFor(model => model.ROM)</td>
+                    </tr>
+                    <tr>
+                        <td>RAM</td>
+                        <td>@Html.DisplayFor(model => model.RAM)</td>
+                    </tr>
+                    <tr>
+                        <td>Camere trước</td>
+                        <td>@Html.DisplayFor(model => model.FrontCamera)</td>
+                    </tr>
+                    <tr>
+                        <td>Camere sau</td>
+                        <td>@Html.DisplayFor(model => model.BehindCamera)</td>
+                    </tr>
+                    <tr>
+                        <td>Dung lượng pin</td>
+                        <td>@Html.DisplayFor(model => model.Battery)</td>
+                    </tr>
+                    <tr>
+                        <td>Hệ điều hành</td>
+                        <td>@Html.DisplayFor(model => model.OS)</td>
+                    </tr>
+                    <tr>
+                        <td>Chipset</td>
+                        <td>@Html.DisplayFor(model => model.Chipset)</td>
+                    </tr>
+                    <tr>
+                        <td>Thẻ SIM</td>
+                        <td>@Html.DisplayFor(model => model.SIMCard)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="product-header text-uppercase">
+            TỔNG QUAN VỀ @Model.ProductName
+        </div>
+        <div class="gioi-thieu-sp">
+            <h3>Giới thiệu</h3>
+            <p>@Model.Description</p>
+            <img alt="@Url.Content(Model.FullName)" class="img-responsive" src="@Url.Content(Model.Image5)" />
+            <h3>Thiết kế</h3>
+            <p>@Model.Design</p>
+            <img alt="@Url.Content(Model.FullName)" class="img-responsive" src="@Url.Content(Model.Image6)" />
+            <h3>Tại sao nên mua @Model.ProductName tại 3rings?</h3>
+            <p>@Model.Reason</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="product-header text-uppercase">
+            ĐỂ LẠI BÌNH LUẬN CỦA BẠN
+        </div>
+        <div class="binh-luan">
+            <div class="row">
+                <div class="col-md-8 col-lg-8">
+
+                    <div id="fb-root"></div>
+                    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v9.0&appId=677313729845939&autoLogAppEvents=1" nonce="Y6NnPnfW"></script>
+                    <div class="fb-comments" data-href="https://localhost:44343/Home/Detail/@Model.ProductID" data-numposts="5" data-width=""></div>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <img class="img-rounded img-responsive" src="@Url.Content(Model.Image)" style="width: 200px; height: auto; display: block; margin: auto">
+                    <h4 class="text-center">@Model.ProductName</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="product-header text-uppercase" id="danhgia">
+            ĐÁNH GIÁ SẢN PHẨM
+        </div>
+        <div class="danh-gia-sp">
+            @Html.Action("Rating", "Home")
+            @foreach (var rate in Model.Ratings.Where(s=>s.RatingState==true).OrderByDescending(m => m.RatingDate))
+            {
+                <hr />
+                <p><b>@rate.Customer.FullName</b> | @rate.RatingDate</p>
+                if (rate.RatingPoint == 0)
+                {
+                    <img src="~/Content/Image/Star/Star_rating_0_of_5.png" class="text-left" height="20" />
+                }
+
+                if (rate.RatingPoint == 1)
+                {
+                    <img src="~/Content/Image/Star/Star_rating_1_of_5.png" class="text-left" height="20" />
+                }
+                if (rate.RatingPoint == 2)
+                {
+                    <img src="~/Content/Image/Star/Star_rating_2_of_5.png" class="text-left" height="20" />
+                }
+                if (rate.RatingPoint == 3)
+                {
+                    <img src="~/Content/Image/Star/Star_rating_3_of_5.png" class="text-left" height="20" />
+                }
+                if (rate.RatingPoint == 4)
+                {
+                    <img src="~/Content/Image/Star/Star_rating_4_of_5.png" class="text-left" height="20" />
+                }
+                if (rate.RatingPoint == 5)
+                {
+                    <img src="~/Content/Image/Star/Star_rating_5_of_5.png" class="text-left" height="20" />
+                }
+                <p>@rate.Content</p>
+
+            }
+        </div>
+    </div>
+    <div class="container">
+        @Html.Action("RelatedProducts", "Home")
+    </div>
+</body>

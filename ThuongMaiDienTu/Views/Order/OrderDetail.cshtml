@@ -1,0 +1,166 @@
+﻿@model IEnumerable<ThuongMaiDienTu.Models.OrderDetail>
+
+@{
+    ViewBag.Title = "ADMIN | Chi tiết đơn hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .jumbotron p {
+        text-align: left;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .btn {
+        margin-left: 10px;
+    }
+</style>
+<div class="container">
+    <h1 class="text-title">Chi tiết đơn hàng</h1>
+    <div class="col-md-4">
+
+        <div class="jumbotron">
+            @foreach (var item in Model.Take(1))
+            {
+                <p>Mã đơn hàng: @item.OrderID</p>
+                <p>Trạng thái: @item.Order.OrderStatu.StatusName</p>
+                if (item.Order.CheckOut == true)
+                {
+                    <p>Đã thanh toán: Đã thanh toán</p>
+                }
+                else
+                {
+                    <p>Đã thanh toán: Chưa thanh toán</p>
+                }
+                if (item.Order.Payment == true)
+                {
+                    <p>Hình thức: Paypal</p>
+                }
+                else
+                {
+                    <p>Hình thức: Ship COD</p>
+                }
+                <p>Ngày đặt: @item.Order.OrderDate</p>
+                <p>Ngày nhận: @item.Order.RecieveDate</p>
+                <p>Khách hàng: @item.Order.FullName</p>
+                <p>SĐT: @item.Order.PhoneNumber</p>
+                <p>Email: @item.Order.Email</p>
+                <p>Địa chỉ giao hàng: @item.Order.ShippingAddress</p>
+                <p>Ghi chú: @item.Order.Note</p>
+
+            }
+        </div>
+    </div>
+    <div class="col-md-8">
+
+        <div class="jumbotron">
+            <table class="table">
+                <thead>
+                    <tr class="bg-primary">
+                        <th class="text-center">
+                            Mã SP
+                        </th>
+                        <th colspan="2" class="text-center">
+                            Sản phẩm
+                        </th>
+                        <th class="text-center">
+                            Đơn giá
+                        </th>
+                        <th class="text-center">
+                            Số lượng
+                        </th>                      
+                        <th>
+                            Thành tiền
+                        </th>
+                    </tr>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @item.ProductID
+                            </td>
+                            <td class="text-center">
+                                <img src="@Url.Content(item.Product.Image)" style="height:50px; width: auto;" />
+                            </td>
+                            <td>
+                                @item.Product.ProductName
+                            </td>
+
+                            <td class="text-center">
+                                @item.Product.Price.Value.ToString("N0")
+                            </td>
+                            <td class="text-center">
+                                x @item.Quantity
+                            </td>
+                            <td class="text-center">
+                                @item.TotalPrice.Value.ToString("N0")
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td class="text-center" style="color: red; font-weight: bold; font-size: 20px;">@Model.Sum(s => s.Quantity) sản phẩm</td>
+                        <td class="text-center" style="color: red; font-weight: bold; font-size: 20px;">@Model.Sum(s => s.TotalPrice).Value.ToString("N0") <sup>đ</sup></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        @foreach (var item in Model.Take(1))
+        {
+    <div class="text-right">
+        @Html.ActionLink("Trở về", "Index", "Order", new { @class = "btn btn-success" })
+        @if (item.Order.StatusID == 1)
+        {
+            using (Html.BeginForm("Confirm", "Order", new { id = item.OrderID }))
+            {
+                <button type="submit" class="btn btn-primary">Xác nhận</button>
+            }
+            using (Html.BeginForm("CancelOrder", "Order", new { id = item.OrderID }))
+            {
+                <button type="submit" class="btn btn-danger">Hủy</button>
+            }
+
+        }
+        @if (item.Order.StatusID == 2)
+        {
+            using (Html.BeginForm("LayHang", "Order", new { id = item.OrderID }))
+            {
+                <button type="submit" class="btn btn-primary">Đã lấy hàng</button>
+            }
+            using (Html.BeginForm("CancelOrder", "Order", new { id = item.OrderID }))
+            {
+                <button type="submit" class="btn btn-danger">Hủy</button>
+            }
+
+        }
+        @if (item.Order.StatusID == 3)
+        {
+            using (Html.BeginForm("GiaoHang", "Order", new { id = item.OrderID }))
+            {
+                <button type="submit" class="btn btn-primary">Đã giao</button>
+            }
+            using (Html.BeginForm("CancelOrder", "Order", new { id = item.OrderID }))
+            {
+                <button type="submit" class="btn btn-danger">Hủy</button>
+            }
+        }
+        @if (item.Order.StatusID == 5)
+        {
+            using (Html.BeginForm("Reconfirm", "Order", new { id = item.OrderID }))
+            {
+                <button type="submit" class="btn btn-primary">Hoàn tác</button>
+            }
+        }
+    </div>
+        }
+    </div>
+
+</div>
+<style>
+    form {
+        display: inline;
+    }
+</style>

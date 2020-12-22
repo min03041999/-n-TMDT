@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="3RINGS - Cửa hàng điện thoại di động giá rẻ, uy tín, chất lượng, đặt khách hàng là trên hết. Xem và mua ngay tại 3RINGS">
+    <meta name="keywords" content="3RINGS. 3RINGS mobile phone shop. Điện thoại. Điện thoại giá rẻ. Điện thoại Apple. Điện thoại iPhone. Điện thoại Samsung. Điện thoại OPPO.">
+    <meta name="robots" content="noindex,nofollow" /> 
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" type="image/ico" href="~/Content/Image/logo.PNG">
+
+
+    <!--Css and Javacripts-->
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link href="~/Content/CSS/about.css" rel="stylesheet" />
+    <link href="~/Content/CSS/allphone.css" rel="stylesheet" />
+    <link href="~/Content/CSS/shoppingCart.css" rel="stylesheet" />
+    <link href="~/Content/CSS/contact.css" rel="stylesheet" />
+    <link href="~/Content/CSS/footer.css" rel="stylesheet" />
+    <link href="~/Content/CSS/menu_product.css" rel="stylesheet" />
+    <link href="~/Content/CSS/product_detail.css" rel="stylesheet" />
+    <link href="~/Content/CSS/product_slide.css" rel="stylesheet" />
+    <link href="~/Content/CSS/userlayout.css" rel="stylesheet" />
+
+    <script src="~/Content/JS/Rating.js"></script>
+    <script src="~/Content/JS/javascript.js"></script>
+    <script src="~/Content/JS/removeAd.js"></script>
+    <!--Font-Awesome-->
+    <script src="https://kit.fontawesome.com/7d370c1d29.js" crossorigin="anonymous"></script>
+    <!--google font-->
+    <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="~/Home/Index">3RINGS</a>
+                    <div class="nav navbar-nav navbar-left">
+                        @using (Html.BeginForm("tim-kiem", "Home"))
+                        {
+                            @Html.TextBox("search", "", new { placeholder = "Nhập từ khóa tìm kiếm", @class = "form-control", @style = "width: 200px; margin: 8px 0 8px 0" })
+                            <input type="submit" style="display: none;" />
+                        }
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a title="điện thoain giá rẻ, uy tín, chất lượng" href="@Url.Action("dien-thoai", "Home")"><i class="fas fa-mobile-alt"></i> Điện thoại</a></li>
+                        <li><a title="giới thiệu về 3rings" href="@Url.Action("ve-chung-toi", "Home")"><i class="fas fa-info"></i> Giới thiệu</a></li>
+                        <li><a title="liên hệ với chúng tôi" href="@Url.Action("gui-lien-he", "Home")"><i class="fas fa-paper-plane"></i> Liên hệ</a></li>
+                        @if (Session["UserID"] == null)
+                        {
+                            <li><a href="@Url.Action("dang-nhap", "User")"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a></li>
+                        }
+                        else
+                        {
+                            var account = Session["UserName"].ToString();
+                            var iduser = Session["UserID"].ToString();
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fas fa-user"> @account</i>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a title="đăng nhập vào 3rings" href="@Url.Action("tai-khoan-cua-toi", "User")"><i class="fas fa-user-cog"></i> Thông tin tài khoản</a></li>
+                                    <li><a title="đăng xuất" href="@Url.Action("dang-xuat", "User")"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div id="snackbar">Đã thêm vào giỏ hàng</div>
+    <div>
+        @RenderBody()
+    </div>
+    <!-- Site footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-8">
+                    <h6>VỀ CHÚNG TÔI</h6>
+                    <p class="text-justify">3RINGS là đối tác trực tiếp của các nhãn hàng và những nhà phân phối uy tín, lớn nhất tại Việt nam : Samsung, Viettelimex ( iPhone VNA), FPTtrading ( Macbook, iPad, Airpods ... ) , Xiaomi, PGI ( JBL, Harman Kardon ...) , DTR ( Energizer, Mophie ... ) ... Ngoài hệ thống bán lẻ với 33 cửa hàng tại Hà nội , TP HCM (12/2019) cùng hệ thống 20 cửa hàng dịch vụ sửa chữa bảo hành Điện Thoại Vui, ItaewomShop còn chuyên phục vụ các khách hàng doanh nghiệp với các đơn hàng số lượng từ nhỏ tới lớn.</p>
+                </div>
+
+                <div class="col-xs-6 col-md-2">
+                    <h6>ĐIỆN THOẠI</h6>
+                    <ul class="footer-links">
+                        <li><a title="điện thoại apple iphone" href="@Url.Action("dien-thoai-apple", "Home")">iPhone</a></li>
+                        <li><a title="điện thoại samsung" href="@Url.Action("dien-thoai-samsung", "Home")">Samsung</a></li>
+                        <li><a title="điện thoại oppo" href="@Url.Action("dien-thoai-oppo", "Home")">OPPO</a></li>
+                        <li><a title="điện thoại xiaomi" href="@Url.Action("dien-thoai-xiaomi", "Home")">Xiaomi</a></li>
+                        <li><a title="điện thoại giá rẻ" href="@Url.Action("dien-thoai", "Home")">Điện thoại giá rẻ</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-6 col-md-2">
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a title="giới thiệu" href="@Url.Action("ve-chung-toi", "Home")">Về chúng tôi</a></li>
+                        <li><a title="liên hệ" href="@Url.Action("gui-lien-he", "Home")">Liên hệ</a></li>
+                        <li><a href="#t">Hướng dẫn mua hàng</a></li>
+                        @if (Session["UserID"] == null)
+                        {
+                            <li><a title="theo dõi đơn hàng" href="@Url.Action("theo-doi-don-hang", "ShoppingCart")">Theo dõi đơn hàng</a></li>
+                        }
+                        else
+                        {
+                            <li><a title="theo dõi đơn hàng" href="@Url.Action("tai-khoan-cua-toi", "User")">Theo dõi đơn hàng</a></li>
+                        }
+
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    <p class="copyright-text">
+                        Copyright &copy; 2017 All Rights Reserved by
+                        <a href="/Admin/SignIn">3RINGS</a>.
+                    </p>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="cart-icon">
+        <a title="Giỏ hàng" href="@Url.Action("gio-hang-cua-toi", "ShoppingCart")"><i class="fas fa-shopping-cart">@Html.Action("BagCart", "ShoppingCart")</i></a>
+    </div>
+    <div>
+        <!-- Load Facebook SDK for JavaScript -->
+        <div id="fb-root"></div>
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    xfbml: true,
+                    version: 'v7.0'
+                });
+            };
+
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+
+        <!-- Your Chat Plugin code -->
+        <div class="fb-customerchat"
+             attribution=setup_tool
+             page_id="105662124391672">
+        </div>
+    </div>
+</body>
+
+</html>

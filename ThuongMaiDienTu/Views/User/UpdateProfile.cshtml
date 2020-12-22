@@ -1,0 +1,69 @@
+﻿@model ThuongMaiDienTu.Models.Customer
+    @{
+        ViewBag.Title = "3RINGS | Cập nhật tài khoản";
+        Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+    }
+
+    <div class="container">
+
+        <ol class="breadcrumb" style="margin: 20px 0 0 0">
+            <li><a href="/Home/Index">Trang chủ</a></li>
+            <li><a href="/User/MyProfile">Hồ sơ tài khoản</a></li>
+            <li>Cập nhật tài khoản</li>
+        </ol>
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <div class="product-header" style="margin-bottom: 20px">
+                    THÔNG TIN TÀI KHOẢN
+                </div>
+                @using (Html.BeginForm("cap-nhat-thong-tin", "User"))
+                {
+                    @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                @Html.HiddenFor(m => m.UserID)
+                @Html.HiddenFor(m => m.Password)
+                @Html.HiddenFor(s => s.Point)
+                @Html.HiddenFor(s => s.RankID)
+            </div>
+                    <div class="form-group">
+                        <label>Họ và tên</label>
+                        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "content-form", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "content-form", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "content-form", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label> Địa chỉ</label>
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "content-form", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mật khẩu xác nhận</label>
+                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "content-form", @type="password", required="required" } })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group text-right">
+                        <a href="@Url.Action("tai-khoan-cua-toi", "User")" type="button" class="btn btn-danger">Hủy</a>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

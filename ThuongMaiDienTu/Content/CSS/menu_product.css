@@ -1,0 +1,94 @@
+﻿body {
+    margin: 0;
+    font-family: "Times New Roman", sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+.menu-side-header {
+    background-color: #110f21;
+    border-radius: 10px;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    margin: 20px 0 0 0;
+}
+.menu-side-body p {
+    background-color: #337ab7;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    margin: 5px 0 0 40px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 14px;
+}
+.menu-side-body a {
+    text-decoration: none;
+    color: white;
+}
+
+.menu-side-body p:hover{
+    background-color: #001f5e;
+    transition: 0.3s;
+}
+.menu-side-body .menu-active {
+    background-color: #001f5e;
+    box-shadow: #838383 2px 2px;
+}
+.menu-side-body i {
+    margin-right: 10px;
+}
+.product-header {
+    background-color: white;
+    color: #110f21;
+    padding: 10px 0 10px 20px;
+    font-weight: bold;
+    font-size: 16px;
+    margin: 20px 0 0 0;
+    border: 0.1px solid;
+    box-shadow: #3366cc 5px 5px;
+}
+
+/*sản phẩm*/
+
+.card {
+    border: 0.5px solid black;
+    background-color: white;
+   
+    padding: 10px;
+    text-align: center;
+    transition: 0.3s;
+    display: block;
+    margin: 10px 0 0 0;
+    font-weight: bold;
+}
+.card a{
+    text-decoration: none;
+}
+.product-name{
+    color: black;
+}
+.product-price {
+    color: red;
+    font-size: 18px;
+}
+.card:hover {
+    box-shadow: #3366cc 5px 5px;
+}
+.card img{
+    width: auto;
+    height: 200px;
+    display: block;
+    margin: auto;
+    transition: 0.3s;
+}
+.card img:hover{
+    transform: scale(1.1);
+}

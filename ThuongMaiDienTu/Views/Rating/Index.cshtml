@@ -1,0 +1,163 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model PagedList.IPagedList<ThuongMaiDienTu.Models.Rating>
+
+@{
+    ViewBag.Title = "3rings | Danh sách đánh giá sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<body>
+
+    <div class="container">
+        <h1 class="text-title">Danh sách đánh giá sản phẩm</h1>
+        <div class="box">
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <form class="navbar-form navbar-left">
+
+                    </form>
+
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <form class="navbar-form navbar-right">
+                        @using (Html.BeginForm("Index", "Rating"))
+                        {
+                            <div class="form-group">
+
+                                @Html.TextBox("search", "", new { placeholder = "Nhập từ khóa tìn kiếm...", @class = "form-control" })
+                            </div>
+                            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                            <a class="btn btn-default" href="/Rating/Index"><span class="glyphicon glyphicon-refresh"></span></a>
+                        }
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="box" style="overflow-x: auto">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr class="bg-primary">
+                        <th class="text-center">Ngày đánh giá</th>
+                        <th class="text-center">Số sao</th>
+                        <th>
+                            Sản phẩm
+                        </th>
+                        <th class="text-center">
+                            Hình ảnh
+                        </th>
+                        <th>
+                            Khách hàng
+                        </th>
+                        <th>
+                            Nội dung
+                        </th>
+                        <th class="text-center">
+                            Trạng thái
+                        </th>
+                        <th class="text-center">
+                            Chức năng
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.RatingDate)
+                        </td>
+                        <td class="text-center">
+                            @if (item.RatingPoint == 0)
+                            {
+                                <img src="~/Content/Image/Star/Star_rating_0_of_5.png" class="text-left" height="20" />
+                            }
+
+                            @if (item.RatingPoint == 1)
+                            {
+                                <img src="~/Content/Image/Star/Star_rating_1_of_5.png" class="text-left" height="20" />
+                            }
+                            @if (item.RatingPoint == 2)
+                            {
+                                <img src="~/Content/Image/Star/Star_rating_2_of_5.png" class="text-left" height="20" />
+                            }
+                            @if (item.RatingPoint == 3)
+                            {
+                                <img src="~/Content/Image/Star/Star_rating_3_of_5.png" class="text-left" height="20" />
+                            }
+                            @if (item.RatingPoint == 4)
+                            {
+                                <img src="~/Content/Image/Star/Star_rating_4_of_5.png" class="text-left" height="20" />
+                            }
+                            @if (item.RatingPoint == 5)
+                            {
+                                <img src="~/Content/Image/Star/Star_rating_5_of_5.png" class="text-left" height="20" />
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.ProductName)
+                        </td>
+                        <td class="text-center">
+                            <img src="@Url.Content(item.Product.Image)" style="height: 30px; width: auto; display: block; margin:auto" id="previewImage" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Content)
+                        </td>
+
+                        @if (item.RatingState == true)
+                        {
+                            <td class="text-center">Hiện</td>
+                        }
+                        else
+                        {
+                            <td class="text-center">Đã ẩn</td>
+                        }
+                    <td class="text-center">
+                        @Html.ActionLink("Xem", "Details", new { id = item.RatingID }, new { @class = "btn btn-success btn-sm" })
+                        @using (Html.BeginForm("HideOrShow", "Rating", new { id = item.RatingID }))
+                        {
+                            if (item.RatingState == true)
+                            {
+                                <button type="submit" class="btn btn-primary btn-sm">Ẩn đánh giá</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-primary btn-sm">Hiện đánh giá</button>
+                            }
+
+                        }
+                        @if (Session["AdminID"] != null && Session["AdminRole"] != null && Session["AdminRole"].ToString() == "1")
+                        {
+                            @Html.ActionLink("Xóa", "Delete", new { id = item.RatingID }, new { @class = "btn btn-danger btn-sm " })
+                        }
+                    </td>
+                    </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="7">
+                                <p class="text-result">Không tìm thấy kết quả phù hợp.</p>
+                            </td>
+                        </tr>
+                    }
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="text-center">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+        </div>
+    </div>
+</body>
+<style>
+    form {
+        display: inline;
+    }
+</style>

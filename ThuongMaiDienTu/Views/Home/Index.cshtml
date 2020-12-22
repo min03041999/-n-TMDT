@@ -1,0 +1,115 @@
+﻿@model IEnumerable<ThuongMaiDienTu.Models.BestSeller>
+@{
+    ViewBag.Title = "3RINGS | Cửa hàng điện thoại di động giá rẻ";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+
+}
+<body>
+    @Html.Partial("Carousel", "Shared")
+
+    <div class="container">
+        <div class="col-lg-3 col-md-4">
+            <div class="menu-side-header">
+                <i class="fas fa-th-list" style="margin-right: 10px"></i>DANH MỤC SẢN PHẨM
+            </div>
+            <div class="menu-side-body" id="my-menu">
+                <p class="menu menu-active"><a href="#" rel="content1"><i class="fas fa-mobile-alt"></i>Sản phẩm HOT nhất</a></p>
+                <p class="menu"><a href="#" rel="content2"><i class="fas fa-mobile-alt"></i>Sản phẩm mới nhất</a></p>
+                <p class="menu"><a href="#" rel="content3"><i class="fas fa-mobile-alt"></i>Điện thoại giá rẻ</a></p>
+                <p class="menu"><a href="#" rel="content4"><i class="fas fa-mobile-alt"></i>APPLE - iPhone</a></p>
+                <p class="menu"><a href="#" rel="content5"><i class="fas fa-mobile-alt"></i>SAMSUNG</a></p>
+                <p class="menu"><a href="@Url.Action("dien-thoai", "Home")"><i class="fas fa-angle-double-right"></i>Xem thêm</a></p>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-8">
+            <div>
+                <div id="content1" style="display: block">
+                    <div class="product-header">
+                        SẢN PHẨM HOT NHẤT
+                    </div>
+                    @foreach (var item in Model)
+                    {
+                        <div class="row-no-gutters">
+                            <div class="col-md-4 col-lg-4 col-sm-4 col-xs-6">
+                                <div class="card" style="position: relative">
+                                    <a href="@Url.Action("chi-tiet-san-pham", "Home", new { name = item.ProductName })">
+                                        <img alt="@Url.Content(item.ProductName)" src="@Url.Content(item.Image)" class="img-responsive" />
+                                        <p class="product-name">@item.ProductName</p>
+                                    </a>
+                                    <p class="product-price">@item.Price.Value.ToString("N0")<sup> đ</sup></p>
+                                    <a onclick="addtocart()" href="/ShoppingCart/AddToCart/@item.ProductID" class="btn btn-primary"><i class="fas fa-cart-plus" style="margin-right: 10px"></i>Giỏ hàng</a>
+                                </div>
+                                <img style="position: absolute; top: 10%; left: 10%" width="50" src="~/Content/Image/icon-hot.png" />
+                            </div>
+                        </div>
+
+                    }
+                </div>
+                <div id="content2" style="display: none;">
+                    @Html.Action("NewArrival", "Home")
+                </div>
+                <div id="content3" style="display: none;">
+                    @Html.Action("LowestProducts", "Home")
+                </div>
+                <div id="content4" style="display: none;">
+                    @Html.Action("Apple", "Home")
+                </div>
+                <div id="content5" style="display: none;">
+                    @Html.Action("Samsung", "Home")
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 20px">
+        <div class="product-header text-center" style="margin-bottom: 20px">
+            TẠI SAO NÊN CHỌN MUA TẠI 3RINGS?
+        </div>
+        <div class="bg-reason">
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <img class="img-responsive img-rounded" src="~/Content/Image/free_delivery.png" />
+                    <h4>MIỄN PHÍ VẬN CHUYỂN</h4>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <img class="img-responsive img-rounded" src="~/Content/Image/return.png" />
+                    <h4>MIỄN PHÍ ĐỔI TRẢ</h4>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <img class="img-responsive img-rounded" src="~/Content/Image/assistance.png" />
+                    <h4>HỖ TRỢ 24/7</h4>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <img class="img-responsive img-rounded" src="~/Content/Image/warranty.png" />
+                    <h4>BẢO HÀNH LÂU DÀI</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 20px;">
+        <iframe src="https://www.google.com/maps/d/embed?mid=1Lhv6aWf_Tpp5VWaZlIVBB_fJCHK79Wga&hl=vi" width="640" height="480"></iframe>
+    </div>
+
+    <script>
+        $('a').on('click', function () {
+            var target = $(this).attr('rel');
+            $("#" + target).show().siblings("div").hide();
+        });
+    </script>
+    <script>
+        // Add active class to the current button (highlight it)
+        var header = document.getElementById("my-menu");
+        var btns = header.getElementsByClassName("menu");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function () {
+                var current = document.getElementsByClassName("menu-active");
+                if (current.length > 0) {
+                    current[0].className = current[0].className.replace(" menu-active", "");
+                }
+                this.className += " menu-active";
+            });
+        }
+    </script>
+</body>

@@ -1,0 +1,64 @@
+﻿@model ThuongMaiDienTu.Models.Contact
+
+@{
+    ViewBag.Title = "3RINGS | Chi tiết liên hệ";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container">
+    <h1 class="text-title">Chi tiết liên hệ</h1>
+    <div class="col-md-offset-3 col-md-6">
+        <div class="jumbotron">
+            <table class="table table-striped">
+                <tr>
+                    <td>Mã liên hệ</td>
+                    <td>@Html.DisplayFor(model => model.ContactID)</td>
+                </tr>
+                <tr>
+                    <td>Ngày gửi</td>
+                    <td>@Html.DisplayFor(model => model.ContactDate)</td>
+                </tr>
+                <tr>
+                    <td>Trạng thái</td>
+                    @if (Model.Status == false)
+                    {
+                        <td>Chưa phản hồi</td>
+                    }
+                    else
+                    {
+                        <td>Đã phản hồi</td>
+                    }
+
+                </tr>
+                <tr>
+                    <td>Khách hàng</td>
+                    <td>@Html.DisplayFor(model => model.Customer.FullName)</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>@Html.DisplayFor(model => model.Customer.Email)</td>
+                </tr>
+                <tr>
+                    <td>Số điện thoại</td>
+                    <td>@Html.DisplayFor(model => model.Customer.PhoneNumber)</td>
+                </tr>
+                <tr>
+                    <td>Chủ đề</td>
+                    <td>@Html.DisplayFor(model => model.Subject)</td>
+                </tr>
+                <tr>
+                    <td>Nội dung</td>
+                    <td>@Html.DisplayFor(model => model.Content)</td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="text-center">
+            @Html.ActionLink("Trở về", "Index", "Contact", new { @class = "btn btn-success" })
+            @if (Model.Status == false)
+            {
+                @Html.ActionLink("Đã phản hồi", "Replied", "Contact",new{id=Model.ContactID} , new { @class = "btn btn-primary" })
+            }
+        </div>
+    </div>
+</div>

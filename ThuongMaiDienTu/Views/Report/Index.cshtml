@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "ADMIN | Báo cáo & Thống kê";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    body {
+        background-color: #f6f6f6;
+    }
+</style>
+<div class="container">
+    <h1 class="text-title">Báo cáo & Thống kê</h1>
+    <div class="background">
+        <div class="row">
+            @Html.Action("TotalOrder", "Report")
+            @Html.Action("DoanhThu", "Report")
+            @Html.Action("TotalProductSold", "Report")
+        </div>
+    </div>
+    <div class="background">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.Action("BestSeller", "Report")
+            </div>
+            <div class="col-md-6">
+                @Html.Action("HighestRevenue", "Report")
+            </div>
+        </div>
+    </div>
+    @Html.Action("TopProduct", "Report")
+    <div class="background">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="thumbnail">
+                    @Html.Partial("BrandChart", "Report")
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="thumbnail">
+                    @Html.Partial("PaymentChart", "Report")
+                </div>              
+            </div>
+        </div>
+    </div>
+
+    <div class="background">
+        <div class="row">
+            @Html.Partial("DoanhThuChart", "Report")
+        </div>
+    </div>
+
+    <div class="background">
+        <div class="row">
+            @Html.Partial("DonHangChart", "Report")
+        </div>
+    </div>
+</div>

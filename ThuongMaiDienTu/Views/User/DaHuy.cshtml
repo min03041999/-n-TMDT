@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ThuongMaiDienTu.Models.Order>
+<table class="table table-hover table-striped">
+    <thead>
+        <tr class="bg-primary">
+            <th>
+                Mã đơn hàng
+            </th>
+            <th>
+                Ngày mua
+            </th>
+            <th>
+                Địa chỉ giao hàng
+            </th>
+            <th>
+                Trạng thái
+            </th>
+            <th>
+                Chức năng
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.OrderID
+                </td>
+                <td>
+                    @item.OrderDate
+                </td>
+                <td>
+                    @item.ShippingAddress
+                </td>
+                <td>
+                    @item.OrderStatu.StatusName
+                </td>
+                <td>
+                    @Html.ActionLink("Chi tiết", "chi-tiet-don-hang", "User", new { id = item.OrderID }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Hoàn tác", "hoan-tac", "User", new { id = item.OrderID }, new { @class = "btn btn-primary" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

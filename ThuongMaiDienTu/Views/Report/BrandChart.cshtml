@@ -1,0 +1,70 @@
+﻿
+<div id="container2">
+
+</div>
+<div style="text-align: center; margin-top: 20px">
+    Dữ liệu được cập nhật vào lúc @DateTime.Now
+</div>
+
+<script>
+    $(document).ready(function () {
+        $.getJSON("/Report/GetData", function (data) {
+            Highcharts.chart('container2', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Tỷ lệ thương hiệu được chọn mua'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Brands',
+                    colorByPoint: true,
+                    data: [{
+                        name: 'Apple',
+                        y: data.iPhone
+                    }, {
+                            name: 'Realme',
+                            y: data.REALME
+                        },
+                        {
+                            name: 'Xiaomi',
+                            y: data.XIAOMI
+                        },
+                        {
+                        name: 'Samsung',
+                        y: data.SAMSUNG
+                    }, {
+                        name: 'OPPO',
+                        y: data.OPPO
+
+                    }, {
+                        name: 'VIVO',
+                        y: data.VIVO
+                    }]
+                }]
+            });
+        });
+    });
+
+
+</script>
+

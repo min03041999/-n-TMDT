@@ -1,0 +1,20 @@
+﻿.boder {
+    border: 0.5px solid black;
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    transition: 0.3s;
+    display: block;
+    margin: 10px 0 0 0;
+    font-weight: bold;
+}
+.boder:hover {
+    box-shadow: #3366cc 5px 5px;
+}
+.boder img{
+    height: 40px;
+    width: auto;
+}
+.active {
+    box-shadow: #3366cc 5px 5px;
+}

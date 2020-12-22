@@ -1,0 +1,218 @@
+﻿@model ThuongMaiDienTu.Models.Product
+
+@{
+    ViewBag.Title = "3RINGS | Chi tiết sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<head>
+    <script>
+        function currentDiv(n) {
+            showDivs(slideIndex = n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("slide");
+            var dots = document.getElementsByClassName("demo");
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace("", "");
+            }
+            x[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += "";
+        }
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-title">Chi tiết sản phẩm</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <div>
+                    <h3 class="text-uppercase text-left">@Html.DisplayFor(s => s.ProductName)</h3>
+                    <p>@Html.Action("CountRating", "Home")</p>
+                </div>
+                <div class="thumbnail" style="max-width:1200px">
+                    <img class="slide" src="@Url.Content(Model.Image)" style="height: 350px; width: auto;">
+                    <img class="slide" src="@Url.Content(Model.Image2)" style="height: 350px; width: auto; display: none">
+                    <img class="slide" src="@Url.Content(Model.Image3)" style="height: 350px; width: auto; display: none">
+                    <img class="slide" src="@Url.Content(Model.Image4)" style="height: 350px; width: auto; display: none">
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-xs-3">
+                        <img class="thumbnail demo" style="height: auto; width: 70px; display: block; margin: auto; padding: 10px" src="@Url.Content(Model.Image)" onclick="currentDiv(1)">
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <img class="thumbnail demo" style="height: auto; width: 70px; display: block; margin: auto; padding: 10px" src="@Url.Content(Model.Image2)" onclick="currentDiv(2)">
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <img class="thumbnail  demo" style="height: auto; width: 70px; display: block; margin: auto; padding: 10px" src="@Url.Content(Model.Image3)" onclick="currentDiv(3)">
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <img class="thumbnail demo" style="height: auto; width: 70px; display: block; margin: auto; padding: 10px" src="@Url.Content(Model.Image4)" onclick="currentDiv(4)">
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-8">
+                <table class="table table-hover table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <td colspan="2" class="text-uppercase text-center bg-primary">Thông số kỹ thuật</td>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td width="30%">Tên đầy đủ</td>
+                        <td>@Html.DisplayFor(model => model.FullName)</td>
+                    </tr>
+                    <tr>
+                        <td>Giá</td>
+                        <td>@Html.DisplayFor(model => model.Price)</td>
+                    </tr>
+                    <tr>
+                        <td>Số lượng</td>
+                        <td>@Html.DisplayFor(model => model.Quantity)</td>
+                    </tr>
+                    <tr>
+                        <td>Thương hiệu</td>
+                        <td>@Html.DisplayFor(model => model.Brand.BrandName)</td>
+                    </tr>
+                    <tr>
+                        <td>Màn hình</td>
+                        <td>@Html.DisplayFor(model => model.Screen)</td>
+                    </tr>
+                    <tr>
+                        <td>Bộ nhớ trong</td>
+                        <td>@Html.DisplayFor(model => model.ROM)</td>
+                    </tr>
+                    <tr>
+                        <td>RAM</td>
+                        <td>@Html.DisplayFor(model => model.RAM)</td>
+                    </tr>
+                    <tr>
+                        <td>Camere trước</td>
+                        <td>@Html.DisplayFor(model => model.FrontCamera)</td>
+                    </tr>
+                    <tr>
+                        <td>Camere sau</td>
+                        <td>@Html.DisplayFor(model => model.BehindCamera)</td>
+                    </tr>
+                    <tr>
+                        <td>Dung lượng pin</td>
+                        <td>@Html.DisplayFor(model => model.Battery)</td>
+                    </tr>
+                    <tr>
+                        <td>Hệ điều hành</td>
+                        <td>@Html.DisplayFor(model => model.OS)</td>
+                    </tr>
+                    <tr>
+                        <td>Chipset</td>
+                        <td>@Html.DisplayFor(model => model.Chipset)</td>
+                    </tr>
+                    <tr>
+                        <td>Thẻ SIM</td>
+                        <td>@Html.DisplayFor(model => model.SIMCard)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="product-header text-uppercase" id="danhgia">
+                KHÁCH HÀNG ĐÁNH GIÁ VỀ SẢN PHẨM
+            </div>
+            <div class="danh-gia-sp">
+                @foreach (var rate in Model.Ratings.OrderByDescending(m => m.RatingDate))
+                {
+                   <div class="row">
+                       <div class="col-md-8">
+                           <p><b>@rate.Customer.FullName</b> | @rate.RatingDate</p>
+                           @if (rate.RatingPoint == 0)
+                           {
+                           <img src="~/Content/Image/Star/Star_rating_0_of_5.png" class="text-left" height="20" />
+                           }
+
+                           @if (rate.RatingPoint == 1)
+                           {
+                           <img src="~/Content/Image/Star/Star_rating_1_of_5.png" class="text-left" height="20" />
+                           }
+                           @if (rate.RatingPoint == 2)
+                           {
+                           <img src="~/Content/Image/Star/Star_rating_2_of_5.png" class="text-left" height="20" />
+                           }
+                           @if (rate.RatingPoint == 3)
+                           {
+                           <img src="~/Content/Image/Star/Star_rating_3_of_5.png" class="text-left" height="20" />
+                           }
+                           @if (rate.RatingPoint == 4)
+                           {
+                           <img src="~/Content/Image/Star/Star_rating_4_of_5.png" class="text-left" height="20" />
+                           }
+                           @if (rate.RatingPoint == 5)
+                           {
+                           <img src="~/Content/Image/Star/Star_rating_5_of_5.png" class="text-left" height="20" />
+                           }
+                           <p>@rate.Content</p>
+                       </div>
+                       <div class="col-md-4 text-right">
+                           @using (Html.BeginForm("HideOrShow", "Rating", new { id = rate.RatingID }))
+                           {
+                               if (rate.RatingState == true)
+                               {
+                                   <button type="submit" class="btn btn-primary btn-sm">Ẩn đánh giá</button>
+                               }
+                               else
+                               {
+                                   <button type="submit" class="btn btn-primary btn-sm">Hiện đánh giá</button>
+                               }
+                               if (Session["AdminID"] != null && Session["AdminRole"] != null && Session["AdminRole"].ToString() == "1")
+                               {
+                                   @Html.ActionLink("Xóa", "Delete", new { id = rate.RatingID }, new { @class = "btn btn-danger btn-sm " })
+                               }
+                           }
+                       </div>
+                   </div>
+                    <hr />
+
+
+                }
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="product-header text-uppercase" id="danhgia" style="margin-bottom: 20px">
+                Bình luận về sản phẩm
+            </div>
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-md-8 col-lg-8">
+
+                        <div id="fb-root"></div>
+                        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v9.0&appId=677313729845939&autoLogAppEvents=1" nonce="Y6NnPnfW"></script>
+                        <div class="fb-comments" data-href="https://localhost:44343/Home/Detail/@Model.ProductID" data-numposts="5" data-width=""></div>
+                    </div>
+                    <div class="col-md-4 col-lg-4">
+                        <img class="img-rounded img-responsive" src="@Url.Content(Model.Image)" style="width: 200px; height: auto; display: block; margin: auto">
+                        <h4 class="text-center">@Model.ProductName</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a href="@Url.Action("Index", "Product")" class="btn btn-warning">Trở về</a>
+            <a href="~/Product/Edit/@Model.ProductID" class="btn btn-primary">Cập nhật</a>
+            <a href="~/Product/Delete/@Model.ProductID" class="btn btn-danger">Xóa SP</a>
+        </div>
+    </div>
+</body>
+<style>
+    form {
+        display: inline;
+    }
+</style>

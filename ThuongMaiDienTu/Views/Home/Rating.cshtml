@@ -1,0 +1,52 @@
+﻿@model ThuongMaiDienTu.Models.Rating
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous">
+    </script>
+
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+          integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+          crossorigin="anonymous">
+
+    <script src="~/Content/JS/Rating/js/better-rating.js"></script>
+    <link href="~/Content/JS/Rating/css/better-rating.css" rel="stylesheet" />
+</head>
+<div class="rating-form">
+    @using (Html.BeginForm("Rating", "Home", FormMethod.Post))
+    {
+        if (Session["UserID"] == null)
+        {
+            <p>Bạn cần đăng nhập để đánh giá sản phẩm.</p>
+            <a href="@Url.Action("dang-nhap", "User")" class="btn btn-primary">Đăng nhập</a>
+        }
+        else
+        {
+            <form id="better-rating-form">
+                <div class="rating">
+                    <i class="fa fa-star" data-rate="1"></i>
+                    
+                    <i class="fa fa-star" data-rate="2"></i>
+                    
+                    <i class="fa fa-star" data-rate="3"></i>
+                    
+                    <i class="fa fa-star" data-rate="4"></i>
+                    
+                    <i class="fa fa-star" data-rate="5"></i>
+                    
+                    <input type="hidden" id="rating-count" name="point" value="0">
+                    
+                </div>
+                <textarea rows="5" required name="content" class="content-form" type="text" placeholder="Nhập đánh giá của bạn"></textarea>
+                <input type="submit" value="Đánh giá" class="btn btn-primary btn-submit" />
+            </form>
+        }
+    }
+</div>
+<script>
+    $(function () {
+        $('#better-rating-form').betterRating();
+    });
+
+</script>

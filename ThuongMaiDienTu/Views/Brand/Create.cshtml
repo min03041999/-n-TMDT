@@ -1,0 +1,40 @@
+﻿@model ThuongMaiDienTu.Models.Brand
+@{
+    ViewBag.Title = "3rings | Thêm thương hiệu";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<body>
+    <div class="container">
+        <h1 class="text-title">Thêm thương hiệu</h1>
+        <div class="row">
+            <div class="col-md-offset-4 col-md-4">
+                <div class="box">
+                    @using (Html.BeginForm("Create", "Brand", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.BrandID)
+                        <form>
+                            <div class="form-group">
+                                <label>Tên thương hiệu</label>
+                                @Html.EditorFor(model => model.BrandName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.BrandName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label>Hình ảnh</label><br />
+                                <img src="@Url.Content(Model.Image)" class="img-rounded" style="height: 200px; width: auto; margin-top: 10px; margin-bottom: 10px" id="previewImage" />
+                                <input type="file" name="ImageUpload" onchange="ShowImagePreview(this, document.getElementById('previewImage'))" />
+                            </div>
+                            <hr />
+                            <div class="form-group text-center">
+                                <a href="/Brand/Index" class="btn btn-warning">Trở về</a>
+                                <button type="submit" class="btn btn-primary">Thêm mới</button>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,118 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model PagedList.IPagedList<ThuongMaiDienTu.Models.Receipt>
+
+@{
+    ViewBag.Title = "3RINGS | Danh sách hóa đơn";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<body>
+    <div class="container">
+        <h1 class="text-title">Danh sách hóa đơn</h1>
+        <div class="box">
+            <div class="row">
+                <div class="col-md-2">
+                    <div style="display: inline">
+                        <div class="col-md-6">
+                            <img height="50" class="img-rounded" src="~/Content/Image/order-icon-sm.png" />
+                        </div>
+                        <div class="col-md-6">
+                            <p style="font-size: 25px; font-weight: bold; padding: 0; margin: 0">@Html.Action("AllOrder", "Order")</p> hóa đơn
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-md-10">
+                    <form class="navbar-form navbar-right">
+                        @using (Html.BeginForm("Index", "Receipt"))
+                        {
+                            <div class="form-group">
+
+                                @Html.TextBox("search", "", new { placeholder = "Nhập từ khóa tìn kiếm...", @class = "form-control" })
+                            </div>
+                            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                            <a class="btn btn-default" href="/Receipt/Index"><span class="glyphicon glyphicon-refresh"></span></a>
+                        }
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="box" style="overflow-x: auto">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr class="bg-primary">
+                        <th class="text-center">Mã hóa đơn</th>
+                        <th class="text-center">Mã đơn hàng</th>
+                        <th class="text-center">
+                           Ngày lập
+                        </th>
+                        <th class="text-center">
+                            Khách hàng
+                        </th>
+                        <th class="text-center">
+                            Thành tiền
+                        </th>
+                        <th class="text-center">
+                            Hình thức thanh toán
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td class="text-center">
+                            @item.ReceiptID
+                        </td>
+                        <td class="text-center">
+                            @item.OrderID
+                        </td>
+                        <td class="text-center">
+                            @item.ReceiptDate
+                        </td>
+                        <td class="text-center">
+                            @item.Order.FullName
+                        </td>
+                        <td class="text-center">
+                            @item.TotalPrice.Value.ToString("N0")
+                        </td>
+                        @if (item.Payment == false)
+                        {
+                            <td class="text-center">
+                                Ship COD
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="text-center">
+                                Paypal
+                            </td>
+                        }
+
+                    </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="7">
+                                <p class="text-result">Không tìm thấy kết quả phù hợp.</p>
+                            </td>
+                        </tr>
+                    }
+                </tfoot>
+            </table>
+        </div>
+        <div class="text-center">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+        </div>
+    </div>
+   
+</body>
+
+

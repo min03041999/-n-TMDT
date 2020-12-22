@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ThuongMaiDienTu.Models.Order>
+@{
+    ViewBag.Title = "3RINGS | Theo dõi trạng thái đơn hàng";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+<div class="container">
+    <div class="row text-center">
+        <div class="col-md-offset-3 col-md-6">
+            <div class="product-header" style="margin-bottom: 20px">
+                THEO DÕI TRẠNG THÁI ĐƠN HÀNG
+            </div>
+            <div class="text-center">
+                @using (Html.BeginForm("theo-doi-don-hang", "ShoppingCart"))
+                {
+                    @Html.TextBox("phoneNumber", "", new { placeholder = "Nhập SĐT đã mua hàng", @class="phonenumber" })
+                    <input type="submit" style="display: none" />
+                }
+            </div>
+        </div>
+    </div>  
+
+    <div class="row" style="margin-top: 20px">
+        @if (Model.Count() == 0)
+        {
+            <div class="jumbotron text-center">
+                <h4>Không tìm thấy đơn hàng nào được đặt bởi SĐT này. Vui lòng thử lại.</h4>
+            </div>
+        }
+        else
+        {
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr class="bg-primary text-center">
+                        <td>
+                            Mã đơn hàng
+                        </td>
+                        <td>
+                            Khách hàng
+                        </td>
+                        <td>
+                            Số điện thoại
+                        </td>
+                        <td>
+                            Email
+                        </td>
+                        <td>
+                            Trạng thái
+                        </td>
+                        <td>
+                            Chức năng
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="text-center">
+                            <td>
+                                @item.OrderID
+                            </td>
+                            <td>
+                                @item.FullName
+                            </td>
+                            <td>
+                                @item.PhoneNumber
+                            </td>
+                            <td>
+                                @item.Email
+                            </td>
+                            <td>
+                                @item.OrderStatu.StatusName
+                            </td>
+                            <td>
+                                <a href="@Url.Action("chi-tiet-don-hang", "User", new {id=item.OrderID})" class="btn btn-success">Chi tiết</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        }
+    </div>
+</div>
+
+

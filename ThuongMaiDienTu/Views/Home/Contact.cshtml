@@ -1,0 +1,80 @@
+﻿@model ThuongMaiDienTu.Models.Contact
+
+@{
+    ViewBag.Title = "3RINGS | Liên hệ";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<body>
+    <div class="container">
+        <ol class="breadcrumb" style="margin-top: 20px">
+            <li><a href="/Home/Index">Trang chủ</a></li>
+            <li>Liên hệ</li>
+        </ol>        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="product-header" style="margin: 0 0 20px 0">
+                    FORM LIÊN HỆ ONLINE
+                </div>
+                @if (Session["UserID"] != null)
+                {
+                    using (Html.BeginForm("gui-lien-he", "Home"))
+                    {
+                        <form>
+                            <div class="form-group">
+                                <label>Chủ đề</label>
+                                @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "subject-form", placeholder = "Nhập chủ đề", required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label>Nội dung</label>
+                                @Html.TextAreaFor(model => model.Content, new {@class = "content-form", rows="10", required = "required" })
+                                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <input onclick="showAlert()" class="btn btn-primary" type="submit" value="Gửi" style="display: block; margin: auto;" />
+                            </div>
+                        </form>
+                    }
+                }
+                else
+                {
+                    <div class="jumbotron text-center">
+                        <h4>Vui lòng đăng nhập để có thể gửi liên hệ</h4>
+                        <a href="@Url.Action("dang-nhap", "User")" class="btn btn-primary">Đăng nhập</a>
+                    </div>
+                }
+
+            </div>
+            <div class="col-md-6">
+                <div class="product-header" style="margin: 0 0 20px 0">
+                    HÌNH THỨC KHÁC
+                </div>
+                <div>
+                    <ul class="list-group">
+                        <li class="list-group-item" style="font-size: 15px">
+                            <i style="margin-right: 20px" class="fas fa-mail-bulk"></i>
+                            <b>Gửi câu hỏi về email: hotro@3rings.com</b>
+                        </li>
+                        <li class="list-group-item" style="font-size: 15px">
+                            <i style="margin-right: 20px" class="fab fa-facebook-f"></i>
+                            <b>Gửi câu hỏi thông qua Facebook chính thức của 3RINGS</b>
+                        </li>
+                        <li class="list-group-item" style="font-size: 15px">
+                            <i style="margin-right: 20px" class="fas fa-phone"></i>
+                            <b>Gọi trực tiếp đến Hotline: 0123456789</b>
+                        </li>
+                        <li class="list-group-item" style="font-size: 15px">
+                            <i style="margin-right: 20px" class="fas fa-building"></i>
+                            <b>Tại văn phòng 3RINGS: 828 Sư Vạn Hạnh, P12, Q10, TP.HCM</b>
+                        </li>
+                    </ul>
+                </div>
+                <div class="map-responsive">
+                    <iframe src="https://www.google.com/maps/d/embed?mid=1Lhv6aWf_Tpp5VWaZlIVBB_fJCHK79Wga&hl=vi" width="640" height="480"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+

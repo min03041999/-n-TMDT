@@ -1,0 +1,108 @@
+﻿@model IEnumerable<ThuongMaiDienTu.Models.Order>
+
+@{
+    ViewBag.Title = "3RINGS | Danh sách đơn hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<body>
+    <div class="container">
+        <h1 class="text-title">Danh sách đơn hàng</h1>
+        <div class="box">
+            <div class="row">
+                <div class="col-md-8">
+                    <div style="display: inline">
+                        <div class="col-md-3">
+                            <div class="col-md-6">
+                                <img height="50" class="img-rounded" src="~/Content/Image/order-icon-sm.png" />
+                            </div>
+                            <div class="col-md-6">
+                                <p style="font-size: 25px; font-weight: bold; padding: 0; margin: 0">@Html.Action("AllOrder", "Order")</p> đơn
+                            </div>              
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-6">
+                                <img height="50" class="img-rounded" src="~/Content/Image/order-success-sm.png" />
+                            </div>
+                            <div class="col-md-6">
+                                <p style="font-size: 25px; font-weight: bold; padding: 0; margin: 0">@Html.Action("SoDonDaGiaoHang", "Order")</p> đơn
+                            </div>
+                             
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-6">
+                                <img height="50" class="img-rounded" src="~/Content/Image/order-cancel-sm.png" />
+                            </div>
+                            <div class="col-md-6">
+                                <p style="font-size: 25px; font-weight: bold; padding: 0; margin: 0">@Html.Action("SoDonDaHuy", "Order")</p> đơn
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    @using (Html.BeginForm("SearchOrder", "Order"))
+                    {
+                        <div class="navbar-form navbar-right">
+
+                            <div class="form-group">
+
+                                @Html.TextBox("search", "", new { placeholder = "Nhập từ khóa tìn kiếm...", @class = "form-control" })
+                            </div>
+                            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                            <a class="btn btn-default" href="/Order/Index"><span class="glyphicon glyphicon-refresh"></span></a>
+                            
+                        </div>
+                    }
+                    </div>
+            </div>
+
+        </div>
+        <div class="box" style="overflow-x: auto">
+            <div class="tab">
+
+                <button class="tablinks tab-active" onclick="openCity(event, 'choxacnhan')">Chờ xác nhận @Html.Action("SoDonChoXacNhan", "Order")</button>
+                <button class="tablinks" onclick="openCity(event, 'cholayhang')">Chờ lấy hàng @Html.Action("SoDonChoLayHang", "Order")</button>
+                <button class="tablinks" onclick="openCity(event, 'danggiaohang')">Đang giao hàng @Html.Action("SoDonDangGiaoHang", "Order")</button>
+                <button class="tablinks" onclick="openCity(event, 'dagiaohang')">Đã giao hàng</button>
+                <button class="tablinks" onclick="openCity(event, 'dahuy')">Đã hủy</button>
+            </div>
+
+            <div id="choxacnhan" class="tabcontent" style="display: block">
+                @Html.Action("ChoXacNhan", "Order")
+            </div>
+            <div id="cholayhang" class="tabcontent">
+                @Html.Action("ChoLayHang", "Order")
+            </div>
+            <div id="danggiaohang" class="tabcontent">
+                @Html.Action("DangGiaoHang", "Order")
+            </div>
+            <div id="dagiaohang" class="tabcontent">
+                @Html.Action("DaGiaoHang", "Order")
+            </div>
+            <div id="dahuy" class="tabcontent">
+                @Html.Action("DaHuy", "Order")
+            </div>
+        </div>
+    </div>
+    <script>
+        function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" tab-active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " tab-active";
+        }
+    </script>
+</body>
+
+

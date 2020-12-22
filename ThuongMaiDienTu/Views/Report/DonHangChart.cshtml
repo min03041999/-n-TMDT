@@ -1,0 +1,65 @@
+﻿<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+<div id="container5" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div style="text-align: center; margin-top: 20px">
+    Dữ liệu được cập nhật vào lúc @DateTime.Now
+</div>
+<script>
+    $(document).ready(function () {
+        $.getJSON("/Report/DonHangTheoThang", function (data) {
+            var Names = []
+            var Qts = []
+            var sp = []
+            for (var i = 0; i < data.length; i++) {
+                Names.push(data[i].name);
+                Qts.push(data[i].donhang);
+                sp.push(data[i].sanpham);
+            }
+
+            Highcharts.chart('container5', {
+                chart: {
+                    type: 'column',
+                },
+                title: {
+                    text: 'Biểu đồ đơn hàng theo từng tháng'
+                },
+                subtitle: {
+                    text: 'Dựa vào tổng đơn hàng trong tháng đó'
+                },
+                xAxis: {
+                    categories: Names,
+                    title: {
+                        text: 'Tháng'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Số lượng'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: 'Đơn hàng',
+                    data: Qts
+                },
+                {
+                    name: 'Sản phẩm',
+                    data: sp
+                }]
+            });
+        });
+    });
+
+
+</script>
+
+

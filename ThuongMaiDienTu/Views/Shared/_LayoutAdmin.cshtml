@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" type="image/ico" href="~/Content/Image/logo.PNG">
+    <meta name="robots" content="noindex,nofollow" />
+
+    <!--Css and Javacripts-->
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Content/JS/javascript.js"></script>
+    <script src="~/Content/JS/removeAd.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link href="~/Content/CSS/admin.css" rel="stylesheet" />
+    <link href="~/Content/CSS/sidebar.css" rel="stylesheet" />
+    <link href="~/Content/CSS/chart.css" rel="stylesheet" />
+    <script src="~/Content/JS/javascript.js"></script>
+    <script src="~/Content/JS/HighChart/exporting.js"></script>
+    <script src="~/Content/JS/HighChart/highcharts.js"></script>
+    <!--Font-Awesome-->
+    <script src="https://kit.fontawesome.com/7d370c1d29.js" crossorigin="anonymous"></script>
+    <!--google font-->
+    <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+    <div id="topheader">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="~/Home/Index">3RINGS</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        @if (Session["AdminID"] == null || Session["AdminRole"] == null)
+                        {
+                            Response.Redirect(Url.Action("SignIn", "Admin"));
+                        }
+                        else
+                        {
+                            var account = Session["AdminName"].ToString();
+                            var role = Session["AdminRoleName"].ToString();
+                            <li><a href="#"><i class="fas fa-user-circle"></i> @account</a></li>
+                            <li><a href="#"><i class="fas fa-user-shield"></i> @role</a></li>
+                            <li><a href="~/Contact/Index"><i class="fas fa-envelope-open-text"></i>Hộp thư @Html.Action("CountContact", "Contact")</a></li>
+                            <li><a href="@Url.Action("LogOut","Admin")"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
+                        }
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    @Html.Partial("~/Views/Shared/Sidebar.cshtml")
+
+    <section>
+        <div style="overflow-x: auto; margin-top: -50px">
+            @RenderBody()
+        </div>
+    </section>
+
+</body>
+</html>

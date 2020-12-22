@@ -1,0 +1,90 @@
+﻿@model IEnumerable<ThuongMaiDienTu.Models.Brand>
+
+@{
+    ViewBag.Title = "3rings | Danh sách thương hiệu";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<body>
+    
+    <div class="container">
+        <h1 class="text-title">Danh sách thương hiệu</h1>
+        <div class="box">
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <form class="navbar-form navbar-left">
+                        <a class="btn btn-primary" href="/Brand/Create">Thêm mới</a>
+                    </form>
+                        
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <form class="navbar-form navbar-right">
+                        @using (Html.BeginForm("Index", "Brand"))
+                        {
+                            <div class="form-group">
+
+                                @Html.TextBox("search", "", new { placeholder = "Nhập từ khóa tìn kiếm...", @class = "form-control" })
+                            </div>
+                            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                            <a class="btn btn-default" href="/Brand/Index"><span class="glyphicon glyphicon-refresh"></span></a>
+                        }
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="box" style="overflow-x: auto">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr class="bg-primary">
+                        <th>
+                            Mã thương hiệu
+                        </th>
+                        <th>
+                            Tên thương hiệu
+                        </th>
+                        <th class="text-center">
+                            Hình ảnh
+                        </th>
+                        <th class="text-center">
+                            Chức năng
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BrandID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BrandName)
+                            </td>
+                            <td class="text-center">
+                                <img src="@Url.Content(item.Image)" style="height: 30px; width: auto; " id="previewImage" />
+                            </td>
+                            <td class="text-center">
+                                @Html.ActionLink("Sửa", "Edit", new { id = item.BrandID }, new { @class = "btn btn-primary btn-sm" })                            
+                                @if (Session["AdminID"] != null && Session["AdminRole"] != null && Session["AdminRole"].ToString() == "1")
+                                {
+                                    @Html.ActionLink("Xóa", "Delete", new { id = item.BrandID }, new { @class = "btn btn-danger btn-sm " })
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="9">
+                                <p class="text-result">Không tìm thấy kết quả phù hợp.</p>
+                            </td>
+                        </tr>
+                    }
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</body>

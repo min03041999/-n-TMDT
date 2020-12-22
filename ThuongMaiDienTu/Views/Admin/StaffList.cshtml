@@ -1,0 +1,102 @@
+﻿@model IEnumerable<ThuongMaiDienTu.Models.Admin>
+
+@{
+    ViewBag.Title = "3rings | Danh sách nhân viên";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<body>
+    <div class="container">
+        <h1 class="text-title">Danh sách nhân viên</h1>
+        <div class="box">
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <form class="navbar-form navbar-left">
+                        <a class="btn btn-primary" href="/Admin/AddNewStaff">Thêm nhân viên</a>
+                    </form>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <form class="navbar-form navbar-right">
+                        @using (Html.BeginForm("StaffList", "Admin"))
+                        {
+                            <div class="form-group">
+
+                                @Html.TextBox("search", "", new { placeholder = "Nhập từ khóa tìn kiếm...", @class = "form-control" })
+                            </div>
+                            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                            <a class="btn btn-default" href="/Admin/StaffList"><span class="glyphicon glyphicon-refresh"></span></a>
+                        }
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="box" style="overflow-x: auto">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr class="bg-primary">
+                        <th class="text-center">
+                            Mã NV
+                        </th>
+                        <th class="text-center">
+                            Tên NV
+                        </th>
+                        <th class="text-center">
+                            Số điện thoại
+                        </th>
+                        <th class="text-center">
+                            Email
+                        </th>
+                        <th class="text-center">
+                            Quyền
+                        </th>
+                        <th class="text-center">
+                            Chức năng
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td class="text-center">
+                            @item.AdminID
+                        </td>
+                        <td class="text-center">
+                            @item.FullName
+                        </td>
+                        <td class="text-center">
+                            @item.PhoneNumber
+                        </td>
+                        <td class="text-center">
+                            @item.Email
+                        </td>
+                        <td class="text-center">
+                            @item.Role.RoleName
+                        </td>
+                        <td class="text-center">
+                            @Html.ActionLink("Xem", "StaffDetail", new { id = item.AdminID }, new { @class = "btn btn-success btn-sm" })
+                            @Html.ActionLink("Sửa", "Edit", new { id = item.AdminID }, new { @class = "btn btn-primary btn-sm" })
+                            @if (Session["AdminID"] != null && Session["AdminRole"] != null && Session["AdminRole"].ToString() == "1")
+                            {
+                                @Html.ActionLink("Xóa", "DeleteStaff", new { id = item.AdminID }, new { @class = "btn btn-danger btn-sm " })
+                            }
+                        </td>
+                        
+                    </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="6">
+                                <p class="text-result">Không tìm thấy kết quả phù hợp.</p>
+                            </td>
+                        </tr>
+                    }
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</body>

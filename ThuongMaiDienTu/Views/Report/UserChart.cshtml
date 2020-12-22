@@ -1,0 +1,55 @@
+﻿<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+<div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div style="text-align: center; margin-top: 20px">
+    Dữ liệu được cập nhật vào lúc @DateTime.Now
+</div>
+<script>
+    $(document).ready(function () {
+        $.getJSON("/Report/KH_Chart", function (data) {
+            var Names = []
+            var Qts = []
+            for (var i = 0; i < data.length; i++) {
+                Names.push(data[i].name);
+                Qts.push(data[i].count);
+            }
+
+            Highcharts.chart('container1', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Khách hàng thân thiết'
+                },
+                subtitle: {
+                    text: 'Dựa vào tổng số sản phẩm đã mua'
+                },
+                xAxis: {
+                    categories: Names
+                },
+                yAxis: {
+                    title: {
+                        text: 'Số lượng'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: 'Số sp đã mua',
+                    data: Qts
+                }]
+            });
+        });
+    });
+
+
+</script>
+

@@ -1,0 +1,102 @@
+﻿@model ThuongMaiDienTu.Models.Customer
+
+@{
+    ViewBag.Title = "3RINGS | Thông tin tài khoản";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<div class="container">
+    <ol class="breadcrumb" style="margin: 20px 0 0 0">
+        <li><a href="/Home/Index">Trang chủ</a></li>
+        <li>Hồ sơ tài khoản</li>
+    </ol>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="product-header" style="margin-bottom: 20px">
+                THÔNG TIN TÀI KHOẢN
+            </div>
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <td>Họ và tên</td>
+                    <td>@Html.DisplayFor(model => model.FullName)</td>
+                </tr>
+                <tr>
+                    <td>Số điện thoại</td>
+                    <td>@Html.DisplayFor(model => model.PhoneNumber)</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>@Html.DisplayFor(model => model.Email)</td>
+                </tr>
+                <tr>
+                    <td>Địa chỉ</td>
+                    <td>@Html.DisplayFor(model => model.Address)</td>
+                </tr>
+                <tr>
+                    <td>Điểm tích lũy</td>
+                    <td>@Model.Point.Value.ToString("N0")</td>
+                </tr>
+                <tr>
+                    <td>Hạng</td>
+                    <td>@Html.DisplayFor(model => model.UserRank.RankName)</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <a href="@Url.Action("cap-nhat-thong-tin", "User")" style="display: block; margin: auto" class="btn btn-primary">Cập nhật thông tin</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-8">
+            <div class="product-header" style="margin-bottom: 20px">
+                LỊCH SỬ MUA HÀNG
+            </div>
+            <div class="tab">
+                <button class="tablinks tab-active" onclick="openCity(event, 'dagiaohang')">Đã giao hàng @Html.Action("SoDonDaGiaoHang", "User")</button>
+                <button class="tablinks" onclick="openCity(event, 'choxacnhan')">Chờ xác nhận @Html.Action("SoDonChoXacNhan", "User")</button>
+                <button class="tablinks" onclick="openCity(event, 'cholayhang')">Chờ lấy hàng @Html.Action("SoDonChoLayHang", "User")</button>
+                <button class="tablinks" onclick="openCity(event, 'danggiaohang')">Đang giao hàng @Html.Action("SoDonDangGiaoHang", "User")</button>
+                <button class="tablinks" onclick="openCity(event, 'dahuy')">Đã hủy @Html.Action("SoDonDaHuy", "User")</button>
+            </div>
+            <div id="dagiaohang" class="tabcontent" style="display: block">
+                @Html.Action("DaGiaoHang", "User")
+            </div>
+            <div id="choxacnhan" class="tabcontent">
+                @Html.Action("ChoXacNhan", "User")
+            </div>
+            <div id="cholayhang" class="tabcontent">
+                @Html.Action("ChoLayHang", "User")
+            </div>
+            <div id="danggiaohang" class="tabcontent">
+                @Html.Action("DangGiaoHang", "User")
+            </div>
+            <div id="dahuy" class="tabcontent">
+                @Html.Action("DaHuy", "User")
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script>
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" tab-active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " tab-active";
+    }
+</script>
+<style>
+    .badge {
+        color: #ffffff;
+        background-color: #337ab7;
+        border: 1px solid #ffffff;
+    }
+</style>

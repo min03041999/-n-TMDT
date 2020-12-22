@@ -1,0 +1,168 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model PagedList.IPagedList<ThuongMaiDienTu.Models.Product>
+
+@{
+    ViewBag.Title = "3rings | Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<body>
+
+    <div class="container">
+        <h1 class="text-title">Danh sách sản phẩm</h1>
+        <div class="box">
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <form class="navbar-form navbar-left">
+                        <a class="btn btn-primary" href="/Product/Create">Thêm sản phẩm</a>
+                    </form>
+
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <form class="navbar-form navbar-right">
+                        @using (Html.BeginForm("Index", "Product"))
+                        {
+                            <div class="form-group">
+
+                                @Html.TextBox("search", "", new { placeholder = "Nhập từ khóa tìn kiếm...", @class = "form-control" })
+                            </div>
+                            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                            <a class="btn btn-default" href="/Product/Index"><span class="glyphicon glyphicon-refresh"></span></a>
+                        }
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="box" style="overflow-x: auto">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr class="bg-primary">
+                        <th class="text-center">
+                            Mã sản phẩm
+                        </th>
+                        <th>
+                            Tên sản phẩm
+                        </th>
+                        <th class="text-center">
+                            Hình ảnh
+                        </th>
+                        <th class="text-center">
+                            Đánh giá
+                        </th>
+                        <th class="text-center">
+                            Thương hiệu
+                        </th>
+                        <th class="text-center">
+                            Số lượng
+                        </th>
+                        <th class="text-center">
+                            Giá
+                        </th>
+                        <th class="text-center">
+                            Chức năng
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.ProductID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProductName)
+                            </td>
+                            <td class="text-center">
+                                <img src="@Url.Content(item.Image)" style="height: 30px; width: auto; display: block; margin:auto" id="previewImage" />
+                            </td>
+                            <td class="text-center">
+                                @{
+                                    var star = item.Ratings.Where(s => s.ProductID == item.ProductID).Average(m => m.RatingPoint);
+                                }
+                                @if (star == 0 || star== null)
+                                {
+                                    <img src="~/Content/Image/Star/Star_rating_0_of_5.png" class="text-left" height="20" />
+                                }
+                                @if (star == 0.5)
+                                {
+                                    <img src="~/Content/Image/Star/Star_rating_0.5_of_5.png" class="text-left" height="20" />
+                                }
+                                @if (star == 1)
+                                {
+                                    <img src="~/Content/Image/Star/Star_rating_1_of_5.png" class="text-left" height="20" />
+                                }
+                                @if (star == 1.5)
+                                {
+                                    <img src="~/Content/Image/Star/Star_rating_1.5_of_5.png" class="text-left" height="20" />
+                                }
+                                @if (star == 2)
+                                {
+                                    <img src="~/Content/Image/Star/Star_rating_1_of_5.png" class="text-left" height="20" />
+                                }
+                                @if (star == 2.5)
+                                {
+                                    <img src="~/Content/Image/Star/Star_rating_2.5_of_5.png" class="text-left" height="20" />
+                                }
+                                @if (star == 3)
+                                {
+                                    <img src="~/Content/Image/Star/Star_rating_3_of_5.png" class="text-left" height="20" />
+                                }
+                                @if (star == 3.5)
+                                {
+                                    <img src="~/Content/Image/Star/Star_rating_3.5_of_5.png" class="text-left" height="20" />
+                                }
+                                @if (star == 4)
+                                {
+                                    <img src="~/Content/Image/Star/Star_rating_4_of_5.png" class="text-left" height="20" />
+                                }
+                                @if (star == 4.5)
+                                {
+                                    <img src="~/Content/Image/Star/Star_rating_4.5_of_5.png" class="text-left" height="20" />
+                                }
+                                @if (star == 5)
+                                {
+                                    <img src="~/Content/Image/Star/Star_rating_5_of_5.png" class="text-left" height="20" />
+                                }
+
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Brand.BrandName)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            <td class="text-center">
+                                @Html.ActionLink("Xem", "Detail", new { id = item.ProductID }, new { @class = "btn btn-success btn-sm" })
+                                @Html.ActionLink("Sửa", "Edit", new { id = item.ProductID }, new { @class = "btn btn-primary btn-sm" })
+                                @if (Session["AdminID"] != null && Session["AdminRole"] != null && Session["AdminRole"].ToString() == "1")
+                                {
+                                    @Html.ActionLink("Xóa", "Delete", new { id = item.ProductID }, new { @class = "btn btn-danger btn-sm " })
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="7">
+                                <p class="text-result">Không tìm thấy kết quả phù hợp.</p>
+                            </td>
+                        </tr>
+                    }
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="text-center">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+        </div>
+    </div>
+</body>

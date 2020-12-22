@@ -1,0 +1,63 @@
+﻿@model ThuongMaiDienTu.Models.Admin
+
+@{
+    ViewBag.Title = "AddNewStaff";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container">
+    <h1 class="text-title">Thêm nhân viên</h1>
+
+    @using (Html.BeginForm())
+    {
+        <div class="box">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.AdminID)
+            
+            <form>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-4">
+                            <label>Họ và tên</label>
+                            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" , required="required"} })
+                            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2">
+                            <label>Quyền</label>
+                            @{ Html.RenderAction("ChooseRole", "Admin");}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-6">
+                            <label>Email</label>
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" }, required = "required" })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-6">
+                                <label>Số điện thoại</label>
+                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" }, required = "required" })
+                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-6">
+                                <label>Mật khẩu</label>
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" }, required = "required" })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="text-center" style="margin-top: 20px">
+                    <a href="/Admin/StaffList" class="btn btn-warning">Trở về</a>
+                    <button type="submit" class="btn btn-primary">Thêm nhân viên</button>
+                </div>
+            </form>
+
+        </div>
+    }
+</div>

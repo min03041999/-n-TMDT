@@ -1,0 +1,78 @@
+﻿@model ThuongMaiDienTu.Models.Rating
+
+@{
+    ViewBag.Title = "ADMIN | Xóa đánh giá";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container">
+    <h1 class="text-title">Xóa đánh giá sản phẩm</h1>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <table class="table table-striped table-bordered table-hover">
+                <tr>
+                    <td>Mã đánh giá</td>
+                    <td>@Html.DisplayFor(model => model.RatingID)</td>
+                </tr>
+                <tr>
+                    <td>Ngày đánh giá</td>
+                    <td>@Html.DisplayFor(model => model.RatingDate)</td>
+                </tr>
+                <tr>
+                    <td width="20%">Số sao</td>
+                    <td>
+                        @if (Model.RatingPoint == 0)
+                        {
+                            <img src="~/Content/Image/Star/Star_rating_0_of_5.png" class="text-left" height="20" />
+                        }
+
+                        @if (Model.RatingPoint == 1)
+                        {
+                            <img src="~/Content/Image/Star/Star_rating_1_of_5.png" class="text-left" height="20" />
+                        }
+                        @if (Model.RatingPoint == 2)
+                        {
+                            <img src="~/Content/Image/Star/Star_rating_2_of_5.png" class="text-left" height="20" />
+                        }
+                        @if (Model.RatingPoint == 3)
+                        {
+                            <img src="~/Content/Image/Star/Star_rating_3_of_5.png" class="text-left" height="20" />
+                        }
+                        @if (Model.RatingPoint == 4)
+                        {
+                            <img src="~/Content/Image/Star/Star_rating_4_of_5.png" class="text-left" height="20" />
+                        }
+                        @if (Model.RatingPoint == 5)
+                        {
+                            <img src="~/Content/Image/Star/Star_rating_5_of_5.png" class="text-left" height="20" />
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mã sản phẩm</td>
+                    <td>@Html.DisplayFor(model => model.Product.ProductID)</td>
+                </tr>
+                <tr>
+                    <td>Tên sản phẩm</td>
+                    <td>@Html.DisplayFor(model => model.Product.ProductName)</td>
+                </tr>
+                <tr>
+                    <td>Khách hàng</td>
+                    <td>@Html.DisplayFor(model => model.User.FullName)</td>
+                </tr>
+                <tr>
+                    <td>Nội dung</td>
+                    <td>@Html.DisplayFor(model => model.Content)</td>
+                </tr>
+            </table>
+            <div class="text-center">
+                @using (Html.BeginForm())
+                {
+                    <a href="@Url.Action("UserList", "Admin")" class="btn btn-warning">Trở về</a>
+                    <button type="submit" class="btn btn-danger">Xóa đánh giá</button>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

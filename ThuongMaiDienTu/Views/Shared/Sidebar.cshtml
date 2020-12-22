@@ -1,0 +1,52 @@
+﻿
+@{
+    Layout = null;
+}
+
+<input type="checkbox" id="check">
+<label for="check">
+    <i class="fas fa-bars" id="btn"></i>
+    <i class="fas fa-times" id="cancel"></i>
+</label>
+<div class="sidebar" style="overflow-y: auto;">
+    <ul>
+        <li><a href="~/Order/Index"><i class="fas fa-tasks"></i>Quản lý đơn hàng @Html.Action("CountOrder", "Order")</a></li>
+        <li><a href="~/Receipt/Index"><i class="fas fa-receipt"></i>Hóa đơn bán hàng</a></li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#QLSP" aria-expanded="true">
+                <i class="fas fa-list-ol"></i>
+                Quản lý sản phẩm
+                <span class="caret"></span>
+            </a>
+            <div id="QLSP" class="collapse">
+                <div class="sidebar-collapse-item">
+                    <a href="~/Product/Index"><i class="fas fa-mobile-alt"></i>Danh sách sản phẩm</a>
+                    <a href="~/Brand/Index"><i class="fab fa-apple"></i>Thương hiệu sản phẩm</a>
+                    <a href="~/Rating/Index"><i class="fas fa-star"></i>Đánh giá sản phẩm</a>
+                </div>
+            </div>
+        </li>
+        @if (Session["AdminID"] != null && Session["AdminRole"] != null && Session["AdminRole"].ToString() == "1")
+        {
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#QLND" aria-expanded="true">
+                    <i class="fas fa-users"></i>
+                    Quản lý người dùng
+                    <span class="caret"></span>
+                </a>
+                <div id="QLND" class="collapse">
+                    <div class="sidebar-collapse-item">
+                        <a href="~/Admin/UserList"><i class="fas fa-user"></i>Quản lý khách hàng</a>
+                        <a href="~/Admin/StaffList"><i class="fas fa-user-shield"></i>Quản lý nhân viên</a>
+                    </div>
+                </div>
+            </li>
+            <li><a href="~/Report/Index"><i class="fas fa-chart-pie"></i>Báo cáo & Thống kê</a></li>
+        }
+        else
+        {
+            <li><a href="~/Admin/UserList"><i class="fas fa-user"></i>Quản lý khách hàng</a></li>
+        }
+
+    </ul>
+</div>

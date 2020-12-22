@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ThuongMaiDienTu.Models.Product>
+<div class="product-header">
+    ĐIỆN THOẠI GIÁ RẺ
+</div>
+@foreach (var item in Model)
+{
+    <div class="row-no-gutters">
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-6">
+            <div class="card">
+                <a href="@Url.Action("chi-tiet-san-pham", "Home", new { name = item.ProductName })">
+                    <img alt="@Url.Content(item.FullName)" src="@Url.Content(item.Image)" />
+                    <p class="product-name">@item.ProductName</p>
+                </a>
+                <p class="product-price">@item.Price.Value.ToString("N0")<sup> đ</sup></p>
+                <a onclick="addtocart()" href="/ShoppingCart/AddToCart/@item.ProductID" class="btn btn-primary"><i class="fas fa-cart-plus" style="margin-right: 10px"></i>Giỏ hàng</a>
+
+            </div>
+        </div>
+    </div>
+
+}

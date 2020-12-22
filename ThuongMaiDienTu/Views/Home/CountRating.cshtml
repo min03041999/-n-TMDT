@@ -1,0 +1,52 @@
+﻿@if (ViewData["TotalRating"] != null)
+{
+    if (ViewData["Point"].ToString() == "0")
+    {
+        <img src="~/Content/Image/Star/Star_rating_0_of_5.png" class="text-left" height="20" />
+    }
+    if (ViewData["Point"].ToString() == "0.5")
+    {
+        <img src="~/Content/Image/Star/Star_rating_0.5_of_5.png" class="text-left" height="20" />
+    }
+    if (ViewData["Point"].ToString() == "1")
+    {
+        <img src="~/Content/Image/Star/Star_rating_1_of_5.png" class="text-left" height="20" />
+    }
+    if (ViewData["Point"].ToString() == "1.5")
+    {
+        <img src="~/Content/Image/Star/Star_rating_1.5_of_5.png" class="text-left" height="20" />
+    }
+    if (ViewData["Point"].ToString() == "2")
+    {
+        <img src="~/Content/Image/Star/Star_rating_1_of_5.png" class="text-left" height="20" />
+    }
+    if (ViewData["Point"].ToString() == "2.5")
+    {
+        <img src="~/Content/Image/Star/Star_rating_2.5_of_5.png" class="text-left" height="20" />
+    }
+    if (ViewData["Point"].ToString() == "3")
+    {
+        <img src="~/Content/Image/Star/Star_rating_3_of_5.png" class="text-left" height="20" />
+    }
+    if (ViewData["Point"].ToString() == "3.5")
+    {
+        <img src="~/Content/Image/Star/Star_rating_3.5_of_5.png" class="text-left" height="20" />
+    }
+    if (ViewData["Point"].ToString() == "4")
+    {
+        <img src="~/Content/Image/Star/Star_rating_4_of_5.png" class="text-left" height="20" />
+    }
+    if (ViewData["Point"].ToString() == "4.5")
+    {
+        <img src="~/Content/Image/Star/Star_rating_4.5_of_5.png" class="text-left" height="20" />
+    }
+    if (ViewData["Point"].ToString() == "5")
+    {
+        <img src="~/Content/Image/Star/Star_rating_5_of_5.png" class="text-left" height="20" />
+    }
+    <a href="#danhgia" style="text-decoration: none; font-size: 18px;">@ViewData["TotalRating"] đánh giá</a>
+}
+
+
+
+

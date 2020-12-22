@@ -1,0 +1,163 @@
+﻿@model ThuongMaiDienTu.Models.Product
+@{
+    ViewBag.Title = "3rings | Cập nhật sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<body>
+
+    <div class="container">
+        <h1 class="text-title">Cập nhật sản phẩm</h1>
+        @using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="box">
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ProductID)
+                <form>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label>Tên sản phẩm</label>
+                            @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-5">
+                            <label>Tên đầy đủ</label>
+                            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3">
+                            <label>Thương hiệu</label>
+                            @{ Html.RenderAction("ChooseBrand", "Product");}
+                            @Html.ValidationMessageFor(model => model.BrandID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label>Ngày nhập</label>
+                            @Html.EditorFor(model => model.ImportDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                            @Html.ValidationMessageFor(model => model.ImportDate, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3">
+                            <label>Số lượng</label>
+                            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3">
+                            <label>Đơn giá</label>
+                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3">
+                            <label>Chipset</label>
+                            @Html.EditorFor(model => model.Chipset, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Chipset, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label>Màn hình</label>
+                            @Html.EditorFor(model => model.Screen, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Screen, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3">
+                            <label>Bộ nhớ trong</label>
+                            @Html.EditorFor(model => model.ROM, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ROM, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3">
+                            <label>RAM</label>
+                            @Html.EditorFor(model => model.RAM, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.RAM, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3">
+                            <label>Dung lượng pin</label>
+                            @Html.EditorFor(model => model.Battery, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Battery, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label>Camere trước</label>
+                            @Html.EditorFor(model => model.FrontCamera, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FrontCamera, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3">
+                            <label>Camera sau</label>
+                            @Html.EditorFor(model => model.BehindCamera, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BehindCamera, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3">
+                            <label>Hệ điều hành</label>
+                            @Html.EditorFor(model => model.OS, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OS, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3">
+                            <label>Thẻ SIM</label>
+                            @Html.EditorFor(model => model.SIMCard, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SIMCard, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label>Mô tả</label>
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-12">
+                            <label>Thiết kế</label>
+                            @Html.EditorFor(model => model.Design, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Design, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-12">
+                            <label>Lý do chọn</label>
+                            @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <img src="@Url.Content(Model.Image)" class="img-rounded" style="height: 150px; width: auto; margin-top: 10px; margin-bottom: 10px;" id="previewImage" />
+                            <input type="file" name="ImageUpload" onchange="ShowImagePreview(this, document.getElementById('previewImage'))" />
+                        </div>
+                        <div class="col-md-4">
+                            <img src="@Url.Content(Model.Image2)" class="img-rounded" style="height: 150px; width: auto; margin-top: 10px; margin-bottom: 10px;" id="previewImage2" />
+                            <input type="file" name="ImageUpload2" onchange="ShowImagePreview2(this, document.getElementById('previewImage2'))" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <img src="@Url.Content(Model.Image3)" class="img-rounded" style="height: 150px; width: auto; margin-top: 10px; margin-bottom: 10px;" id="previewImage3" />
+                            <input type="file" name="ImageUpload3" onchange="ShowImagePreview3(this, document.getElementById('previewImage3'))" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <img src="@Url.Content(Model.Image4)" class="img-rounded" style="height: 150px; width: auto; margin-top: 10px; margin-bottom: 10px;" id="previewImage4" />
+                            <input type="file" name="ImageUpload4" onchange="ShowImagePreview4(this, document.getElementById('previewImage4'))" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <img src="@Url.Content(Model.Image5)" class="img-rounded" style="height: 150px; width: auto; margin-top: 10px; margin-bottom: 10px;" id="previewImage5" />
+                            <input type="file" name="ImageUpload5" onchange="ShowImagePreview5(this, document.getElementById('previewImage5'))" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <img src="@Url.Content(Model.Image6)" class="img-rounded" style="height: 150px; width: auto; margin-top: 10px; margin-bottom: 10px;" id="previewImage6" />
+                            <input style="margin-bottom: 30px" type="file" name="ImageUpload6" onchange="ShowImagePreview6(this, document.getElementById('previewImage6'))" />
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a href="/Product/Index" class="btn btn-warning">Trở về</a>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </form>
+
+            </div>
+        }
+    </div>
+</body>

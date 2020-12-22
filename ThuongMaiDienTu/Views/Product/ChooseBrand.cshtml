@@ -1,0 +1,3 @@
+﻿
+@model ThuongMaiDienTu.Models.Brand
+@Html.DropDownListFor(model => model.BrandID, new SelectList(Model.BrandCollection, "BrandID", "BrandName"),  new { @class = "form-control" })
